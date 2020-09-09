@@ -13,24 +13,20 @@ function find() {
 
 function findBy(filter) {
     return db("users")
-        .where("filter")
-        .limit(1);
+        .where(filter)
+        .first()
 };
 
 function findById(id) {
     return db("users")
         .where({ id })
-        .limit(1);
+        .first()
 };
 
 async function add(user) {
-    try {
         const [id] = await db("users")
             .insert(user)
-        return findBy({ username: user.username})
-    } catch(err) {
-        res.send({
-            message: "error creating user"
-        })
-    }
+            console.log(id)
+            // .then(([id]) => db("users".where({ id }).limit(1)))
+        return findById(id)
 };
